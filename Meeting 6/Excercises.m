@@ -47,6 +47,20 @@ for n = 1:Len
 end
 
 plot(y1);
+    
+%% ALL PASS 
+% y[n] = g * x[n] - x[n-1] - g * y[n-1]
+f1 = 440;
+L = floor(SR/f1);
+Lfrac = SR/f1 - floor(SR/f1);
+C = (1 - Lfrac)/(1 + Lfrac); % fraction of frequency
+
+b = [zeros(L,1); 1; C];
+a = [1; C; zeros(L-2,1); 0.5*C; 0.5*(1+C); 0.5]; % f.. matlab with - and + signs
+
+[y, zf] = filter(b, a, x);
+
+plot(y);
 
 %% PLOTING
 
